@@ -39,8 +39,8 @@ public class CatalogResource {
         UserRatings userRatings = restTemplate.getForObject(uriComponents.toUriString(), UserRatings.class);
 
         List<CatalogItem> catalogItemList = userRatings.getUserRatings().stream().map(rating -> {
-            UriComponents MovieUriComponents = UriComponentsBuilder.newInstance().scheme(protocol).host(movieDetailServiceName).pathSegment("/movies/" + rating.getMovieId()).build();
-           Movie movie = restTemplate.getForObject(MovieUriComponents.toUriString(), Movie.class);
+            UriComponents movieUriComponents = UriComponentsBuilder.newInstance().scheme(protocol).host(movieDetailServiceName).pathSegment("/movies/" + rating.getMovieId()).build();
+           Movie movie = restTemplate.getForObject(movieUriComponents.toUriString(), Movie.class);
            return new CatalogItem(movie.getMovieName(), movie.getMovieDescription(), rating.getRating());
         }).collect(Collectors.toList());
 
