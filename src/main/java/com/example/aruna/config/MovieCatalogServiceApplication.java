@@ -1,22 +1,15 @@
-package com.example.aruna;
+package com.example.aruna.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan({"com.example.aruna"})
 @SpringBootApplication
 public class MovieCatalogServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MovieCatalogServiceApplication.class, args);
-	}
-
-	@Bean
-	@LoadBalanced
-	public RestTemplate getRestTemplate () {
-		return new RestTemplate();
 	}
 
 }
