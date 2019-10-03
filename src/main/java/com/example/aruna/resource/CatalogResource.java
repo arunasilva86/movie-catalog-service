@@ -34,14 +34,14 @@ public class CatalogResource {
     private String movieDetailServiceName;
 
     @RequestMapping("/{userId}")
-    public List<CatalogItem> getUserRatedMovieDetails (@PathVariable int userId) {
+    public List<CatalogItem> getUserRatedMovieDetails(@PathVariable int userId) {
         UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme(protocol).host(movieRatingServiceName).pathSegment("/userRatings/users/" + userId).build();
         UserRatings userRatings = restTemplate.getForObject(uriComponents.toUriString(), UserRatings.class);
 
         List<CatalogItem> catalogItemList = userRatings.getUserRatings().stream().map(rating -> {
             UriComponents movieUriComponents = UriComponentsBuilder.newInstance().scheme(protocol).host(movieDetailServiceName).pathSegment("/movies/" + rating.getMovieId()).build();
-           Movie movie = restTemplate.getForObject(movieUriComponents.toUriString(), Movie.class);
-           return new CatalogItem(movie.getMovieName(), movie.getMovieDescription(), rating.getRating());
+            Movie movie = restTemplate.getForObject(movieUriComponents.toUriString(), Movie.class);
+            return new CatalogItem(movie.getMovieName(), movie.getMovieDescription(), rating.getRating());
         }).collect(Collectors.toList());
 
         return catalogItemList;
